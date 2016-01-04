@@ -1,0 +1,273 @@
+provide comp15 hw6 scorerMain.cpp solverMain.cpp checkerMain.cpp \
+		BogScorer.cpp BogScorer.h \
+		BogSolver.cpp BogSolver.h \
+		BogValidator.cpp BogValidator.h \
+		Dictionary.h Dictionary.cpp Node.h Node.cpp \
+	        ReadMe.md Makefile BogWordList.h
+Hello, dyang01<Derick W. Yang>!
+Receiving solution to 'hw6' in class 'comp15'.
+Checking all files:
+    scorerMain.cpp (200 bytes)
+    solverMain.cpp (285 bytes)
+    checkerMain.cpp (197 bytes)
+    BogScorer.cpp (1631 bytes)
+    BogScorer.h (633 bytes)
+    BogSolver.cpp (7027 bytes)
+    BogSolver.h (2068 bytes)
+    BogValidator.cpp (4057 bytes)
+    BogValidator.h (1102 bytes)
+    Dictionary.h (654 bytes)
+    Dictionary.cpp (2300 bytes)
+    Node.h (1011 bytes)
+    Node.cpp (1589 bytes)
+    ReadMe.md (2855 bytes)
+    Makefile (1272 bytes)
+    BogWordList.h (695 bytes)
+Total size of files is 27576 bytes.
+This is submission 4 of assignment hw6 in class 'comp15'.
+
+Are you ready to provide these for testing (yes or no)? 
+    copying file 'scorerMain.cpp'
+    copying file 'solverMain.cpp'
+    copying file 'checkerMain.cpp'
+    copying file 'BogScorer.cpp'
+    copying file 'BogScorer.h'
+    copying file 'BogSolver.cpp'
+    copying file 'BogSolver.h'
+    copying file 'BogValidator.cpp'
+    copying file 'BogValidator.h'
+    copying file 'Dictionary.h'
+    copying file 'Dictionary.cpp'
+    copying file 'Node.h'
+    copying file 'Node.cpp'
+    copying file 'ReadMe.md'
+    copying file 'Makefile'
+    copying file 'BogWordList.h'
+Preparing for testing...
+Starting provide tests...
+Checking submission for basic components...
+
+ - Checking for required files
+
+    - BogSolver.h               ok
+    - BogWordList.h             ok
+    - solverMain.cpp            ok
+    - BogValidator.h            ok
+    - BogValidator.cpp          ok
+    - checkerMain.cpp           ok
+    - scorerMain.cpp            ok
+    - Makefile                  ok
+
+Found a readme file: ReadMe.md
+   missing newline at end of BogValidator.cpp
+   Adding a newline to the end of BogValidator.cpp.
+make[1]: Entering directory `/comp/15/grading/hw6/dyang01.4'
+clang++ -O0 -Wall -Wextra -g -o bbscorer BogScorer.cpp scorerMain.cpp
+clang++ -O0 -Wall -Wextra -g -o bbsolver BogSolver.cpp solverMain.cpp \
+				Dictionary.cpp Node.cpp 
+clang++ -O0 -Wall -Wextra -g -o bbchecker BogValidator.cpp checkerMain.cpp \
+				Dictionary.cpp Node.cpp
+make[1]: Leaving directory `/comp/15/grading/hw6/dyang01.4'
+
+
+Program looks ok so far..
+...done preparing for testing.
+your submission has been accepted!
+cleaning up after testing...
+Running tests please wait.  
+I am in /comp/15/grading/hw6/dyang01.4 
+and files are: 
+total 424
+-r--r-----. 1 dyang01 grade15  89949 Dec  2 02:15 bbchecker.bak
+-r--r-----. 1 dyang01 grade15  68682 Dec  2 02:15 bbscorer.bak
+-r--r-----. 1 dyang01 grade15 185368 Dec  2 02:15 bbsolver.bak
+-r--r-----. 1 dyang01 grade15   1631 Dec  2 02:15 BogScorer.cpp.bak
+-r--r-----. 1 dyang01 grade15    633 Dec  2 02:15 BogScorer.h.bak
+-r--r-----. 1 dyang01 grade15   7027 Dec  2 02:15 BogSolver.cpp.bak
+-r--r-----. 1 dyang01 grade15   2068 Dec  2 02:15 BogSolver.h.bak
+-r--r-----. 1 dyang01 grade15   4058 Dec  2 02:15 BogValidator.cpp.bak
+-r--r-----. 1 dyang01 grade15   1102 Dec  2 02:15 BogValidator.h.bak
+-r--r-----. 1 dyang01 grade15    695 Dec  2 02:15 BogWordList.h.bak
+-r--r-----. 1 dyang01 grade15    197 Dec  2 02:15 checkerMain.cpp.bak
+-r--r-----. 1 dyang01 grade15   2300 Dec  2 02:15 Dictionary.cpp.bak
+-r--r-----. 1 dyang01 grade15    654 Dec  2 02:15 Dictionary.h.bak
+drwxrws---. 2 dyang01 grade15   4096 Dec  2 02:15 grading
+-r--r-----. 1 dyang01 grade15   1272 Dec  2 02:15 Makefile.bak
+-r--r-----. 1 dyang01 grade15   1589 Dec  2 02:15 Node.cpp.bak
+-r--r-----. 1 dyang01 grade15   1011 Dec  2 02:15 Node.h.bak
+-r--r-----. 1 dyang01 grade15   2855 Dec  2 02:15 ReadMe.md.bak
+-r--r-----. 1 dyang01 grade15    200 Dec  2 02:15 scorerMain.cpp.bak
+-r--r-----. 1 dyang01 grade15    285 Dec  2 02:15 solverMain.cpp.bak
+Running  ${CXX} -g ${CXXFLAGS} BogSolver.cpp _N_Tdeepcopy.cpp \ bbsolver: _N_Tdeepcopy.cpp BogSolver.cpp BogSolver.h ${CXX} ${CXXFLAGS} BogSolver.cpp _N_Tdeepcopy.cpp \ rm -f bbscorer bbsolver bbchecker -o _Tdeepcopy
+Running  ${CXX} -g ${CXXFLAGS} BogSolver.cpp _N_TgetWords.cpp \ bbsolver: _N_TgetWords.cpp BogSolver.cpp BogSolver.h ${CXX} ${CXXFLAGS} BogSolver.cpp _N_TgetWords.cpp \ rm -f bbscorer bbsolver bbchecker -o _TgetWords
+Running  ${CXX} -g ${CXXFLAGS} BogSolver.cpp _N_Tbsfuncs.cpp \ bbsolver: _N_Tbsfuncs.cpp BogSolver.cpp BogSolver.h ${CXX} ${CXXFLAGS} BogSolver.cpp _N_Tbsfuncs.cpp \ rm -f bbscorer bbsolver bbchecker -o _Tbsfuncs
+//@@
+//@@ report of running many sets of test data
+//@@
+No compile errors!
+OK No compiler warnings!
+===== TESTING SOLVER ======================
+OK duplicates suppressed
+OK skips words with 1 or 2 letters
+-- does program print end of data marker?
+OK prints < > at end of output
+-- Does program check validity of board dimensions?
+OK rejects boards with short rows
+OK rejects boards with too few lines
+OK program converts lower case to upper case
+-- Does program find all the words?
+OK 01.2x2.1 all words correct
+OK 02.2x2.2 all words correct
+OK 03.2x2.3 all words correct
+OK 04.2x2.4 all words correct
+NO 05.2x3.1 not all words correct
+   +----- details -----------
+   |Extra words in program output:
+   |BCA
+   |Found 8 correct words, but
+   |Missing 3 words in program output:
+   |AYCZBX
+   |XABZYC
+   |ZCBYXA
+OK 06.3x3.1 all words correct
+OK 07.3x3 all words correct
+OK 08.3x3 all words correct
+NO 12.lcase.1 crashed
+OK 13.ucase.1 all words correct
+OK 14.8x8 all words correct
+OK 16.qu all words correct
+OK 20.reg4x4 all words correct
+OK 21.reg4x4 all words correct
+OK 22.reg4x4 all words correct
+OK 23.reg4x4 all words correct
+OK 30.reg5x5 all words correct
+OK 31.reg5x5 all words correct
+OK 32.reg5x5 all words correct
+OK 33.reg5x5 all words correct
+OK 34.reg5x5 all words correct
+OK HBF is correct
+-- Does the program report the correct char locations?
+OK 01.2x2.1 all paths correct
+OK 02.2x2.2 all paths correct
+OK 03.2x2.3 all paths correct
+OK 04.2x2.4 all paths correct
+NO 05.2x3.1 not all paths correct
+   +----- details -----------
+   |Binary file (standard input) matches
+OK 06.3x3.1 all paths correct
+OK 07.3x3 all paths correct
+OK 08.3x3 all paths correct
+NO 12.lcase.1 crashed
+OK 13.ucase.1 all paths correct
+OK 20.reg4x4 all paths correct
+OK 21.reg4x4 all paths correct
+OK 22.reg4x4 all paths correct
+OK 23.reg4x4 all paths correct
+OK 30.reg5x5 all paths correct
+OK 31.reg5x5 all paths correct
+OK 32.reg5x5 all paths correct
+OK 33.reg5x5 all paths correct
+OK 34.reg5x5 all paths correct
+===== TESTING OTHER SOLVER FUNCTIONS =====
+OK getWords() works for set 20
+OK getWords() works for set 13
+OK getWords() returns a copy
+~~ testing interface for set 20 ~~~
+OK numWords() is ok for set 20
+OK numWords(5) works for set 20
+OK numWords(3) works for set 20
+OK listWords() works for set 20 
+OK listWords(5) works for set 20 
+OK listWords(3) works for set 20 
+~~ testing interface for set 13 ~~~
+OK numWords() is ok for set 13
+OK numWords(5) works for set 13
+OK numWords(3) works for set 13
+OK listWords() works for set 13 
+OK listWords(5) works for set 13 
+OK listWords(3) works for set 13 
+===== TESTING CHECKER ======================
+OK cin.eof() bug not detected
+OK test=20: all words correct
+OK test=dupes: all words correct
+OK test=long: all words correct
+OK test=notboard: all words correct
+OK test=notdict: all words correct
+OK test=nowhere: all words correct
+OK test=short: all words correct
+OK test=simple: all words correct
+===== TESTING SCORER ======================
+OK cin.eof() bug not detected
+OK test=20: all scores correct
+OK test=dupes: all scores correct
+OK test=long: all scores correct
+OK test=notboard: all scores correct
+OK test=notdict: all scores correct
+OK test=nowhere: all scores correct
+OK test=short: all scores correct
+OK test=simple: all scores correct
+===== CHECKING DESIGN =====================
+~~~~~~~~~~ function lengths ~~~~~~~~~~~~~~
+~BogScorer          0                   BogScorer.cpp
+getWords            1                   BogSolver.cpp
+inBoard             1                   BogValidator.cpp
+repeat              1                   BogValidator.cpp
+appendChild         2                   Node.cpp
+BogScorer           2                   BogScorer.cpp
+BogValidator        2                   BogValidator.cpp
+~Dictionary         2                   Dictionary.cpp
+Dictionary          2                   Dictionary.cpp
+BogSolver           3                   BogSolver.cpp
+listWords           3                   BogSolver.cpp
+~BogValidator       4                   BogValidator.cpp
+printWords          4                   BogSolver.cpp
+createWord          5                   BogSolver.cpp
+findChild           5                   Node.cpp
+Node                5                   Node.cpp
+numWords            5                   BogSolver.cpp
+printBoard          5                   BogSolver.cpp
+scoreAnswers        5                   BogScorer.cpp
+~BogSolver          6                   BogSolver.cpp
+main                6                   checkerMain.cpp
+main                6                   scorerMain.cpp
+getWords            7                   BogSolver.cpp
+main                7                   solverMain.cpp
+postOrderRemove     7                   Dictionary.cpp
+printNode           7                   Node.cpp
+sortedInsert        7                   BogSolver.cpp
+isValid             8                   BogValidator.cpp
+readDict            8                   BogSolver.cpp
+readDict            8                   BogValidator.cpp
+listWords           9                   BogSolver.cpp
+numWords            10                  BogSolver.cpp
+populatePossWords   10                  BogValidator.cpp
+printAnswers        10                  BogScorer.cpp
+isPrefix            11                  Dictionary.cpp
+solve               11                  BogSolver.cpp
+addPreNodes         12                  Node.cpp
+readBoard           12                  BogValidator.cpp
+readBoard           13                  BogSolver.cpp
+checkWords          14                  BogValidator.cpp
+isWord              14                  Dictionary.cpp
+printWords          14                  BogSolver.cpp
+addToString         15                  BogSolver.cpp
+insert              15                  Dictionary.cpp
+checkForWordsFrom   22                  BogSolver.cpp
+readAnswers         23                  BogScorer.cpp
+addWordsFrom        24                  BogValidator.cpp
+~~~~~~~~~~ commenting ~~~~~~~~~~~~~~
+Chars: 6672 / 22488 = 30 %
+Lines: 201 / 963 = 21 %
+34 block comment lines
+174 line comment lines
+~~~~~~~~~~ format check ~~~~~~~~~~~~~~
+lines: 962
+long:  0
+long-percent: 0
+need-indent: 701
+indented: 517
+indent-percent: 73
+
+Did not pass some tests
+...done cleaning up after testing
+your submission is complete!

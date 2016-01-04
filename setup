@@ -1,0 +1,384 @@
+#!/bin/sh
+#
+#   boggle site setup script
+#
+#    purp: setup the website and links for the boggle program
+#    idea: Code for tools is written in a directory.
+#	   The website is set up in ~user/public_html/bog15.
+#	   The website links the binaries to this development dir
+#
+#    note: Most of the files are really symlinks to code in comp15 dir
+#	   which means updates are easier to do.
+#	   To meet apache suexec criteria, the .cgi files cannot be
+#	   links.
+#
+#  To set up the website for students, we need to do:
+#
+#  	[a] check if the script is being run in the devel dir
+#  	[b] make a public_html if not made
+#  	[c] make sure $HOME is o+x and public_html is o+x
+#  	[d] make $HOME/public_html/bog15 if not exists
+#  	[e] set mode for bog15 to be 755
+#  	[f] copy the base site dirs to $BOG
+#  	[g] make sure they have the correct modes
+#  	[h] make symlinks from $BOG to the current dir
+#
+#  	( note: the script will run bbsolver and bbchecker and bbscorer
+#  		which will be symlinks to the same names in $DEV )
+#
+#  	And then we're done
+#
+#  hist: 2015-03-16 no more copyfrom files so this is now conditional
+#  hist: 2013-11-24 modified for mod-perl running as apache in /
+#
+
+	#ORIG=/g/15/2013f/files/bog
+	#ORIG=/g/15/2015s/public_html/assignments/hw6/files/bog
+	ORIG=/g/15/2015f/public_html/assignments/6_Boggle/files/bog
+	LINKTO=$ORIG/l
+	COPYFROM=$ORIG/c
+	COPYSRC=$ORIG/src
+	DEVLINK=$ORIG/l_dev
+	SITE=bog15
+	WEBROOT=$HOME/public_html
+	WEBSITE=$WEBROOT/$SITE
+
+	main()
+	{
+		setup
+		wantto_start		|| exit 0
+		is_already_installed	&& exit 0
+		confirm_current_dir	|| exit 0
+		start_install
+		make_website		|| exit 1
+		set_site_perms		|| exit 1
+
+		link_publish_script	|| exit 1
+		copy_and_link_files	|| exit 1
+		copy_actual_files	|| exit 1
+		copy_source_files	|| exit 1
+		set_file_perms
+
+		say_ok
+	}
+
+	setup()
+	{
+		TF=`mktemp /tmp/sub.XXXXXX` || exit 1
+		trap "rm -f $TF $TF.*; exit" 0 2 3 15
+		BOLD=`tput bold`
+		REGU=`tput sgr0`
+		REV=`tput  rev`
+	}
+
+	start_install()
+	{
+		clear
+
+		printf "%s Setting up Boggle Site for $ME %s\n" "$BOLD" \
+			"$REGU"
+		echo ""
+	}
+
+	#
+	# Link to the course versions of the website files.
+	# The only ones needed to be copied are the .cgi scripts
+	# so that suexec will be happy,
+	#
+	#
+	copy_and_link_files()
+	{
+		CURRDIR=$(pwd)
+		cd $WEBSITE || oops "Cannot chdir to $WEBSITE"
+
+		narrate "Installing website files" NL
+
+		# First: make symlinks to shared files.
+		# These will get the correct permissions from the origs
+
+		LINKTOFILES=`ls $LINKTO`
+		narrate "Linking to web files" NL
+		for f in `ls $LINKTO`
+		do
+			printf "\r"
+			narrate "    $f       "
+			ln -s $LINKTO/$f $f > $TF.e || oops "Cannot link $f"
+		done
+		echo ""
+		narrate "  Linking complete"
+		ok
+
+		#
+		# Now copy all the cgi files AND replace __USER__ with
+		# the user id of the current user.  These scripts need
+		# the path hard-coded because they run under modperl
+		# which runs in no particular directory.
+		#
+		if test -d $COPYFROM
+		then
+			narrate "Copying web files " NL
+			for f in $(ls $COPYFROM)
+			do
+				printf "\r"
+				narrate "    $f       "
+				if sed "s/__USER__/$ME/g" $COPYFROM/$f > ./$f
+				then
+					:
+				else
+					oops "Cannot copy $f"
+				fi
+				case $f in
+					*.pl|*.cgi)  calmode=755	;;
+					*)	     calmode=644	;;
+				esac
+				if chmod $calmode $f  > $TF.e
+				then
+					narrate "Permissions set"
+				else
+					oops "Cannot chmod $f"
+				fi
+			done
+			echo ""
+			narrate "  Copying complete"
+		fi
+		ok
+		cd $CURRDIR
+	}
+	
+	copy_actual_files()
+	{
+		# there are five files that must be turned into actual files
+		actual_files="index.html gf.pl bogsolve.pl \
+			bogcheck.pl bogbrd.pl"
+		pushd . > /dev/null
+		cd $WEBSITE
+		for f in $actual_files; do
+			cp --remove-destination `readlink ${f}` $f
+			chmod a+rx $f
+		done
+		popd > /dev/null
+	}
+
+	copy_source_files()
+	{
+		# This will copy the boilerplate code 
+		# and link the data folder
+		cp $COPYSRC/* .
+		ln -s $ORIG/data .
+	}
+
+	set_file_perms()
+	{
+		:
+	}
+
+	say_ok()
+	{
+		printf "\nDONE!\n\n"
+		echo "To use your site:"
+		echo "visit:"
+		echo "   http://www.cs.tufts.edu/~$ME/bog15/"
+		echo ""
+		echo "Work on the programs to make the page work."
+		echo ""
+		echo "Then type:  ./publish"
+		echo "  to publish your checker, solver, and scorer"
+		echo ""
+	}
+	#
+	# link to a script to copy the basic files to the site
+	# note: these files are not likely to exist now.
+	#
+	link_publish_script()
+	{
+		rm -f publish
+		narrate "linking to a script to publish your programs"
+		for f in $(ls $DEVLINK)
+		do
+			ln -s $DEVLINK/$f .  || oops "Cannot link to $f"
+		done
+		echo ""
+		echo "NOTE:"
+		echo "  When you want to test your site, just"
+		echo "  type   ./publish"
+		echo "  to publish  your scorer/checker/solver to your site."
+	}
+
+	set_site_perms()
+	{
+		narrate "Setting access permissions" NL
+
+		narrate "   home directory"
+		if chmod o+x $HOME > $TF.e
+		then
+			ok
+		else
+			oops "Cannot set home to correct mode"
+		fi
+
+		narrate "   public_html"
+		if chmod ugo+x,g-w $WEBROOT > $TF.e
+		then
+			ok
+		else
+			oops "Cannot set public_html to correct mode"
+		fi
+
+		narrate "   public_html/$SITE"
+		if chmod ugo+rx,g-w $WEBSITE > $TF.e
+		then
+			ok
+		else
+			oops "Cannot set public_html/$SITE to correct mode"
+		fi
+	}
+	#
+	# print a nice message in a color
+	#  if arg 2 is NL then print newline
+	#
+	narrate()
+	{
+		if test "$2" = NL
+		then
+			echo "    $1"
+		else
+			printf "    %s  ..." "$1"
+		fi
+	}
+	ok()
+	{
+		printf "%s OK!%s\n" "$BOLD" "$REGU"
+	}
+	oops()
+	{
+		printf "%s FAILED %s \n" "$REV" "$REGU"
+		exit 1
+	}
+	#
+	# set up public_html if not already there
+	# then make SITE
+	#
+	make_website()
+	{
+		if test ! -d $WEBROOT
+		then
+			narrate "Making web directory: public_html"
+			if mkdir $WEBROOT > $TF.e
+			then
+				ok
+			else
+				oops "Cannot make public_html"
+			fi
+		fi
+		if test ! -d $WEBSITE
+		then
+			narrate "Making boggle web directory: public_html/$SITE"
+			if mkdir $WEBSITE > $TF.e
+			then
+				ok
+			else
+				oops "Cannot make public_html/$SITE"
+			fi
+		fi
+	}
+
+	wantto_start()
+	{
+		clear
+		printf "%s BOGGLE WEBSITE INSTALLATION %s\n" "$BOLD" "$REGU"
+		echo ""
+		echo "This program will set up a boggle website for your"
+		echo "account.  The programs you write for homework 2 will"
+		echo "be used by that website to play the game."
+		echo ""
+		echo "You must run this program from the folder where"
+		echo "you will be writing the program.  You must now"
+		echo "be in the directory where the source code and"
+		echo "runnable programs will be stored."
+		echo ""
+		yesno "Ok to proceed" && return 0
+		return 1
+	}
+
+	#
+	# prompt for a y/n answer to a question sent as $1
+	#
+	yesno()
+	{
+		while true
+		do
+			printf "$1 (y/n)? "
+			read ANS
+			case "$ANS" in
+				y*|Y*)	return 0	;;
+				n*|N*)	return 1	;;
+			esac
+		done
+	}
+
+	#
+	# return true if bog15 is already installed
+	#
+	is_already_installed()
+	{
+		test -d $WEBSITE	|| return 1
+		echo ""
+		echo "It appears your boggle page is already installed."
+		if yesno "Reinstall the boggle page"
+		then
+			LOC=`pwd`
+			cd $HOME/public_html
+			rm -rf $SITE
+			cd $LOC
+			return 1
+		fi
+		return 0
+	}
+
+	#
+	# ask user if this is the development dir
+	# make sure it is not in a public space
+	# Then record the path in DEV_DIR
+	#
+	confirm_current_dir()
+	{
+		CUR_DIR=$(pwd)
+		ME=$(whoami)
+		SUB_DIR=$(echo $CUR_DIR | sed "s/.*\/$ME\///")
+
+		#
+		# make sure we are in the student account directory tree
+		#
+
+		echo "You are currently in directory: $SUB_DIR "
+		if echo "$PWD" | grep "$ME" > /dev/null
+		then
+			:
+		else
+			echo "You must be in a directory in your account."
+			return 1
+		fi
+
+		#
+		# now make sure the user is happy to be here
+		#
+
+		case "$CUR_DIR" in
+			*/public_html)
+				echo "Your source code cannot be on the"
+				echo "webpage.  Please change to a different"
+				echo "directory and try again."
+				return 1
+				;;
+		esac
+		if yesno "Is this where you plan to work on your program?"
+		then
+			return 0
+		else
+			echo "Ok. Then change to a different folder and"
+			echo "run the program again."
+			return 1
+		fi
+	}
+
+	main

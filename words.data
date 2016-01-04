@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Prints contents of dictionary (in data/words.txt) followed by a
+# period ('.') followed by the contents of any files given on the
+# command line.
+# 
+# Examples:
+#
+# words.data data/4-4-3.dat | bbsolver
+#
+# words.data data/4-4-1.dat words-to-check.txt
+
+DICTFILE=data/words.txt
+
+(cat $DICTFILE; echo .; cat $*)
